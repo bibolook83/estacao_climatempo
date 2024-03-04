@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsão do Tempo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .weather-info {
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Previsão do Tempo</h1>
+  <div class="weather-info">
+    <h2>Informações Meteorológicas</h2>
+    <p id="location">Localização: Carregando...</p>
+    <p id="temperature">Temperatura: Carregando...</p>
+    <p id="description">Descrição: Carregando...</p>
+  </div>
+
+  <script>
+    // Função para obter informações meteorológicas
+    function getWeather() {
+      // Chave de API e URL da API do OpenWeatherMap
+      lat = -24.514166227668532;
+      lon = -48.845820473299476;
+      const apiKey = 'c3cd74dac6e4e597a7ce0b3bb9e0b081';
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Apiaí, br=${apiKey}&units=metric`;
+      // Requisição para a API do OpenWeatherMap
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // Atualiza as informações na página HTML
+          document.getElementById('location').textContent = `Localização: ${data.name}, ${data.sys.country}`;
+          document.getElementById('temperature').textContent = `Temperatura: ${data.main.temp}°C`;
+          document.getElementById('description').textContent = `Descrição: ${data.weather[0].description}`;
+        })
+        .catch(error => {
+          console.error('Erro ao obter informações meteorológicas:', error);
+        });
+    }
+
+    // Chamada da função ao carregar a página
+    window.onload = getWeather;
+  </script>
+</body>
+</html>
